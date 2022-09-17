@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script language="javascript">
+        function addRow(tableID) {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            if (rowCount < 3) { 
+                var row = table.insertRow(rowCount);
+        
+                var colCount = table.rows[0].cells.length;
+                row.id = 'row_'+rowCount;
+                for (var i = 0; i < colCount; i++) {
+                    var newcell = row.insertCell(i);
+                    newcell.outerHTML = table.rows[0].cells[i].outerHTML;            
+                }
+               var listitems= row.querySelectorAll("input");
+               
+                    for (i=0; i<listitems.length; i++) {
+                      listitems[i].setAttribute("oninput", "calculate('"+row.id+"')");
+                    }
+                  
+            } else {
+                alert("Maximum row is 3.");
+        
+            }
+        }
+       
+        function DELETERow(tableID)
+    {
+    
+        var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            if(rowCount>1){
+                 table.deleteRow(rowCount-1);
+                
+            }else{
+                alert("minmum  row is 1.");
+            }
+    }
+    
+    
+    
+        function calculate(elementID) {
+            var mainRow = document.getElementById(elementID);
+            var myBox1 = mainRow.querySelectorAll('[name=cell1]')[0].value;
+            var myBox2 = mainRow.querySelectorAll('[name=cell2]')[0].value;
+            var myBox3 = mainRow.querySelectorAll('[name=cell3]')[0].value;
+            var total = mainRow.querySelectorAll('[name=total]')[0];
+    
+         var myResult1 = +myBox1 +( +myBox3)+(+myBox2);
+        total.value = myResult1;
+        
+        }
+          
+        
+        </script>
+        </head>
+        <body>
+            
+           <input type="button" value="Add" onClick="addRow('dataTable')" />
+           <input type="button"  value="delete" onClick="DELETERow('dataTable')"/>
+                        
+        <table id="dataTable" class="form" border="2">
+            <tbody>
+                <tr id='row_0'>
+                    <p>
+                        <td>
+                        
+                            <input type="number" required="required" name="cell1" oninput="calculate('row_0')"/>
+                        </td>
+                        
+                        <td>
+                                    
+                            <input name="cell2"  oninput="calculate('row_0')" required="required"/>
+                        </td>
+                        <td>              
+                           <input name="cell3"  oninput="calculate('row_0')" required="required"/>
+                       </td>
+                        <td>
+                            <label for="total">sum</label>
+                            <input type="text" required="required" class="small" name="total"/>
+                        </td>
+                      
+                    </p>
+                </tr>
+            </tbody>
+        </table>
+</body>
+</html>
+
+     
+    
